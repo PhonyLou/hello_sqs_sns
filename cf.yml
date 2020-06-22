@@ -5,7 +5,7 @@ Resources:
     RuleSchedule:
         Type: AWS::Events::Rule
         Properties:
-            ScheduleExpression: cron(0/30 * * * ? *)
+            ScheduleExpression: cron(0/5 0/7 * * ? *)
             State: ENABLED
             Targets:
                 - Arn: 
@@ -31,6 +31,7 @@ Resources:
         Type: AWS::SNS::Topic
         Properties:
             TopicName: QilinNotificationTopic
+            KmsMasterKeyId: d9e54010-f4dd-4f45-8bec-75cbc6b034d9
             Tags:
                 -
                     Key: "qilin-sns-key"
@@ -53,6 +54,7 @@ Resources:
                 -
                     Key: "qilin-sqs-key"
                     Value: "qilin-sqs-value"
+            KmsMasterKeyId: d9e54010-f4dd-4f45-8bec-75cbc6b034d9
     QilinSqsDlqPolicy:
         Type: AWS::SQS::QueuePolicy
         Properties: 
