@@ -31,20 +31,40 @@ Resources:
         Type: AWS::SNS::Topic
         Properties:
             TopicName: QilinNotificationTopic
-    
+   
+    QilinSqsDLQ:
+        Type: AWS::SQS::Queue
+        Properties:
+            QueueName: QilinSqsDLQ
     NotificationQueue:
         Type: AWS::SQS::Queue
         Properties:
             QueueName: QilinNotificationQueue
             MessageRetentionPeriod: 604800
             VisibilityTimeout: 300
+            RedrivePolicy:
+                deadLetterTargetArn: !GetAtt QilinSqsDLQ.Arn
+                maxReceiveCount: 2
+    QilinSqsDlqPolicy:
+        Type: AWS::SQS::QueuePolicy
+        Properties: 
+            PolicyDocument: 
+                Statement:
+                    -
+                        Effect: Allow
+                        Principal: '*'
+                        Action: 
+                            - sqs:SendMessage
+                        Resource: '*'
+            Queues: 
+                - Ref: QilinSqsDLQ
     
     QilinEmailDLQ:
         Type: AWS::SQS::Queue
         Properties:
             QueueName: QilinEmailDLQ
 
-    QilinDlqPolicy:
+    QilinEmailDlqPolicy:
         Type: AWS::SQS::QueuePolicy
         Properties: 
             PolicyDocument: 
