@@ -14,12 +14,13 @@
   </properties>
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-lambda -->
+    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs -->
     <dependency>
       <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-lambda</artifactId>
+      <artifactId>aws-java-sdk-sqs</artifactId>
       <version>1.11.779</version>
     </dependency>
+
 
     <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-cloudwatch -->
     <dependency>
@@ -52,6 +53,11 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <version>2.9.8</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-events</artifactId>
+      <version>2.2.8</version>
     </dependency>
   </dependencies>
 
