@@ -44,6 +44,23 @@ Resources:
         Properties:
             QueueName: QilinEmailDLQ
 
+    QilinDlqPolicy:
+        Type: AWS::SQS::QueuePolicy
+        Properties: 
+            PolicyDocument: 
+                Statement:
+                    -
+                        Effect: Allow
+                        Principal: '*'
+                        Action: 
+                            - sqs:SendMessage
+                        Resource: '*'
+                        Condition:
+                            ArnEquals:
+                                aws:SourceArn: !Ref NotificationTopic
+            Queues: 
+                - Ref: QilinEmailDLQ
+
     EmailSubscription:
         Type: AWS::SNS::Subscription
         Properties:
