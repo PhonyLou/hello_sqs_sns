@@ -39,12 +39,19 @@ Resources:
             MessageRetentionPeriod: 604800
             VisibilityTimeout: 300
     
+    QilinEmailDLQ:
+        Type: AWS::SQS::Queue
+        Properties:
+            QueueName: QilinEmailDLQ
+
     EmailSubscription:
         Type: AWS::SNS::Subscription
         Properties:
             Endpoint: phonylou@qq.com
             Protocol: email
             TopicArn: !Ref NotificationTopic
+            RedrivePolicy:
+                deadLetterTargetArn: !GetAtt QilinEmailDLQ.Arn
     
     QueueSubscription:
         Type: AWS::SNS::Subscription
