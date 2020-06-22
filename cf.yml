@@ -31,6 +31,10 @@ Resources:
         Type: AWS::SNS::Topic
         Properties:
             TopicName: QilinNotificationTopic
+            Tags:
+                -
+                    Key: "qilin-sns-key"
+                    Value: "qilin-sns-value"
    
     QilinSqsDLQ:
         Type: AWS::SQS::Queue
@@ -45,6 +49,10 @@ Resources:
             RedrivePolicy:
                 deadLetterTargetArn: !GetAtt QilinSqsDLQ.Arn
                 maxReceiveCount: 2
+            Tags:
+                -
+                    Key: "qilin-sqs-key"
+                    Value: "qilin-sqs-value"
     QilinSqsDlqPolicy:
         Type: AWS::SQS::QueuePolicy
         Properties: 
